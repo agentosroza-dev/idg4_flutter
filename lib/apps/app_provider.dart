@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../logics/student_logic.dart';
-import '../logics/user_logic.dart';
 import 'package:provider/provider.dart';
 
+import '../logics/student_logic.dart';
 import '../logics/textsize_logic.dart';
 import '../logics/theme_logic.dart';
+import '../logics/user_logic.dart';
 import '../screens/splash_screen.dart';
 
 Widget appProvider() {

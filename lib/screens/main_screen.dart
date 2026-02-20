@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../logics/user_logic.dart';
-import 'login_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../logics/textsize_logic.dart';
 import '../logics/theme_logic.dart';
+import '../logics/user_logic.dart';
+import 'login_screen.dart';
 import 'student_screen.dart';
 
 class MainScreen extends StatefulWidget {

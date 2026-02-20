@@ -3,8 +3,12 @@ import 'package:provider/provider.dart';
 
 import '../logics/student_logic.dart';
 import '../models/student_model.dart';
+import '../services/student_service.dart';
+import '../utils/delete_message.dart';
+import '../utils/my_message.dart';
+import '../widgets/my_3line_card.dart';
 import '../widgets/my_loading.dart';
-import '../widgets/my_simple_card.dart';
+import 'student_form.dart';
 
 class StudentScreen extends StatefulWidget {
   const StudentScreen({super.key});
@@ -31,9 +35,9 @@ class _StudentScreenState extends State<StudentScreen> {
         });
       }
 
-      if (_scroller.position.pixels == _scroller.position.maxScrollExtent) {
-        debugPrint("reached bottom");
-        //your code
+      if (_scroller.position.pixels >=
+          _scroller.position.maxScrollExtent - 200) {
+        context.read<StudentLogic>().readStudents(context);
       }
     });
   }
@@ -67,6 +71,14 @@ class _StudentScreenState extends State<StudentScreen> {
             },
             icon: Icon(_isGrid ? Icons.grid_on : Icons.list),
           ),
+          IconButton(
+            onPressed: () {
+              Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (context) => StudentForm()));
+            },
+            icon: Icon(Icons.person_add),
+          ),
         ],
       ),
       body: _buildBody(),
@@ -75,12 +87,16 @@ class _StudentScreenState extends State<StudentScreen> {
   }
 
   Widget _buildBody() {
-    return RefreshIndicator(onRefresh: () async {
-      context.read<StudentLogic>().setLoading();
-      context.read<StudentLogic>().readStudents(context);
-
-    }, child: _buildGridView());
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<StudentLogic>().setLoading();
+        await context.read<StudentLogic>().readStudents(context, refresh: true);
+      },
+      child: _buildGridView(),
+    );
   }
+
+  bool _deletingInProgress = false;
 
   Widget _buildGridView() {
     bool loading = context.watch<StudentLogic>().loading;
@@ -110,16 +126,54 @@ class _StudentScreenState extends State<StudentScreen> {
       return loadingWidget;
     } else {
       return GridView.builder(
+        controller: _scroller,
         physics: BouncingScrollPhysics(),
         cacheExtent: 500,
         gridDelegate: delegate,
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return MySimpleCard(
-            context,
-            "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg",
-            item.name,
+          // debugPrint("item.image: ${item.image}");
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => StudentForm(student: item),
+                ),
+              );
+            },
+
+            onLongPress: _deletingInProgress
+                ? null
+                : () async {
+                    bool? deleted = await showDeleteDiaglog(context) ?? false;
+                    if (deleted) {
+                      setState(() {
+                        _deletingInProgress = true;
+                      });
+                      StudentService()
+                          .deleteStudents(context, item.id)
+                          .then((value) {
+                            MyMessage(context, "Deleted Student is $value");
+                            context.read<StudentLogic>().readStudents(context);
+                          })
+                          .onError((e, s) {
+                            MyMessage(context, e.toString());
+                          })
+                          .whenComplete(() {
+                            setState(() {
+                              _deletingInProgress = false;
+                            });
+                          });
+                    }
+                  },
+            child: My3LineCard(
+              context,
+              item.image,
+              item.name,
+              item.major.title,
+              item.major.id,
+            ),
           );
         },
       );

@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (text!.isEmpty) {
           return "Please fill in the Password.";
         }
-        if (text!.length < 6) {
+        if (text.length < 6) {
           return "Password must be at least 6 characters.";
         }
         return null; // no error

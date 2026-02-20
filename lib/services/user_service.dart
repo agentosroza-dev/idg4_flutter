@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
-import 'package:my_students/services/base_url.dart';
+import 'base_url.dart';
 import '../models/success_user.dart';
 
 class UserService {
@@ -20,7 +20,7 @@ class UserService {
   // Alternative: Use static instance
   // static final Logger _logger = Logger();
   
-  final String base = BaseUrl().base;
+  final String base = BaseUrl.base;
 
   Future<SuccessUser> login(String email, String password) async {
     logger.d("Base URL: $base");

@@ -17,10 +17,39 @@ class StudentLogic extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future readStudents(BuildContext context) async {
-    final studentModel = await _service.readStudents(context);
-    _students = studentModel.data;
+  String? _nextPageUrl;
+  bool _isFetchingMore = false;
+
+  Future readStudents(BuildContext context, {bool refresh = false}) async {
+
+    if (!refresh && _nextPageUrl == null && _students.isNotEmpty) {
+      return;
+    }
+
+    if (_isFetchingMore) return;
+
+    _isFetchingMore = true;
+
+    final studentModel = await _service.readStudents(
+      context,
+      refresh ? null : _nextPageUrl,
+    );
+
+    if (refresh) {
+      _students = studentModel.data;
+    } else {
+      _students.addAll(studentModel.data);
+    }
+
+    debugPrint("_nextPageUrl: $_nextPageUrl");
+    
+    _nextPageUrl = studentModel.nextPageUrl == "null"
+        ? null
+        : studentModel.nextPageUrl;
+
     _loading = false;
+    _isFetchingMore = false;
+
     notifyListeners();
   }
 }

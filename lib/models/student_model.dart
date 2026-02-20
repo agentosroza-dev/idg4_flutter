@@ -1,12 +1,17 @@
 // To parse this JSON data, do
 //
-//     final studentModel = studentModelFromJson(jsonString);
+//     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
+
+import 'package:my_students/services/base_url.dart';
+
+
 
 StudentModel studentModelFromJson(String str) => StudentModel.fromJson(json.decode(str));
 
 String studentModelToJson(StudentModel data) => json.encode(data.toJson());
+
 
 class StudentModel {
     String currentPage;
@@ -57,12 +62,12 @@ class StudentModel {
 
     Map<String, dynamic> toJson() => {
         "current_page": currentPage,
-        "data": List<Datum>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "first_page_url": firstPageUrl,
         "from": from,
         "last_page": lastPage,
         "last_page_url": lastPageUrl,
-        "links": List<Link>.from(links.map((x) => x.toJson())),
+        "links": List<dynamic>.from(links.map((x) => x.toJson())),
         "next_page_url": nextPageUrl,
         "path": path,
         "per_page": perPage,
@@ -75,26 +80,66 @@ class StudentModel {
 class Datum {
     String id;
     String name;
+    String image;
+    String majorId;
     String createdAt;
     String updatedAt;
+    Major major;
 
     Datum({
         required this.id,
         required this.name,
+        required this.image,
+        required this.majorId,
         required this.createdAt,
         required this.updatedAt,
+        required this.major,
     });
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"].toString(),
         name: json["name"].toString(),
+        image: '${BaseUrl.base}/storage/${json["image"]}',
+        majorId: json["major_id"].toString(),
+        createdAt: json["created_at"].toString(),
+        updatedAt: json["updated_at"].toString(),
+        major: Major.fromJson(json["major"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "image": image,
+        "major_id": majorId,
+        "created_at": createdAt,
+        "updated_at": updatedAt,
+        "major": major.toJson(),
+    };
+}
+
+class Major {
+    String id;
+    String title;
+    String createdAt;
+    String updatedAt;
+
+    Major({
+        required this.id,
+        required this.title,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    factory Major.fromJson(Map<String, dynamic> json) => Major(
+        id: json["id"].toString(),
+        title: json["title"].toString(),
         createdAt: json["created_at"].toString(),
         updatedAt: json["updated_at"].toString(),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
+        "title": title,
         "created_at": createdAt,
         "updated_at": updatedAt,
     };
@@ -105,6 +150,7 @@ class Link {
     String label;
     String page;
     String active;
+
 
     Link({
         required this.url,
