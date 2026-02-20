@@ -7,10 +7,22 @@ ThemeData darkTheme(int scaleIndex) {
   return ThemeData(
     brightness: Brightness.dark,
     textTheme: TextTheme(
-      titleSmall: GoogleFonts.carlito(fontSize: 16 + (scaleIndex * 3)),
-      titleMedium: GoogleFonts.carlito(fontSize: 20 + (scaleIndex * 3)),
-      titleLarge: GoogleFonts.carlito(fontSize: 24 + (scaleIndex * 3)),
-      bodyMedium: GoogleFonts.carlito(fontSize: 18 + (scaleIndex * 3)),
+      titleSmall: GoogleFonts.carlito(
+        fontSize: 16 + (scaleIndex * 3),
+        color: fgColor,
+      ),
+      titleMedium: GoogleFonts.carlito(
+        fontSize: 20 + (scaleIndex * 3),
+        color: fgColor,
+      ),
+      titleLarge: GoogleFonts.carlito(
+        fontSize: 24 + (scaleIndex * 3),
+        color: fgColor,
+      ),
+      bodyMedium: GoogleFonts.carlito(
+        fontSize: 18 + (scaleIndex * 3),
+        color: fgColor,
+      ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       shape: CircleBorder(),
@@ -23,12 +35,12 @@ ThemeData darkTheme(int scaleIndex) {
       centerTitle: true,
       elevation: 8,
     ),
-    cardTheme: CardThemeData(color: Colors.grey.shade900, elevation: 1),
+    cardTheme: CardThemeData(elevation: 1),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         disabledBackgroundColor: bgColor,
         disabledForegroundColor: fgColor,
-      )
+      ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       // backgroundColor: bgColor,

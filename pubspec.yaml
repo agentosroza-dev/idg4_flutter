@@ -48,6 +48,8 @@ dependencies:
   email_validator: ^3.0.0
   # State Management & Utilities
   flutter_secure_storage: ^10.0.0
+  path: ^1.9.1
+  image_picker: ^1.2.1
 
   # Loger print
   logger: ^2.5.0          # Better logging

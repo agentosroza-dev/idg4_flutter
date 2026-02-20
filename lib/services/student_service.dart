@@ -18,7 +18,7 @@ class StudentService {
   Future<StudentModel> readStudents(BuildContext context, String? url) async {
     SuccessUser user = context.read<UserLogic>().successUser;
 
-    final finalUrl = url ?? "$base/api/students";
+    final finalUrl = url ?? "$base/api/students_api";
 
     http.Response response = await http.get(
       Uri.parse(finalUrl),
@@ -38,7 +38,7 @@ class StudentService {
 
   Future<bool> deleteStudents(BuildContext context, String id) async {
     SuccessUser user = context.read<UserLogic>().successUser;
-    final url = "$base/api/students/$id";
+    final url = "$base/api/students_api/$id";
     try {
       http.Response response = await http.delete(
         Uri.parse(url),
@@ -72,7 +72,7 @@ class StudentService {
     File? imageFile,
   ) async {
     SuccessUser user = context.read<UserLogic>().successUser;
-    final url = "$base/api/students";
+    final url = "$base/api/students_api";
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
 
@@ -116,14 +116,14 @@ class StudentService {
 
   Future<bool> updateStudent(
     BuildContext context,
-    String id, 
+    String id,
     String name,
     String majorId,
     File? imageFile,
   ) async {
     SuccessUser user = context.read<UserLogic>().successUser;
 
-    final url = "$base/api/students/${id}";
+    final url = "$base/api/students_api/$id";
 
     var request = http.MultipartRequest('POST', Uri.parse(url));
 

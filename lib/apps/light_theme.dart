@@ -3,15 +3,28 @@ import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme(int scaleIndex) {
   final fgColor = Colors.white;
-  final bgColor = Colors.cyan;
+  final bgColor = Colors.pink;
+  final txtColor = Colors.black87;
 
   return ThemeData(
     brightness: Brightness.light,
     textTheme: TextTheme(
-      titleSmall: GoogleFonts.carlito(fontSize: 16 + (scaleIndex * 3)),
-      titleMedium: GoogleFonts.carlito(fontSize: 20 + (scaleIndex * 3)),
-      titleLarge: GoogleFonts.carlito(fontSize: 24 + (scaleIndex * 3)),
-      bodyMedium: GoogleFonts.carlito(fontSize: 18 + (scaleIndex * 3)),
+      titleSmall: GoogleFonts.carlito(
+        fontSize: 16 + (scaleIndex * 3),
+        color: txtColor,
+      ),
+      titleMedium: GoogleFonts.carlito(
+        fontSize: 20 + (scaleIndex * 3),
+        color: txtColor,
+      ),
+      titleLarge: GoogleFonts.carlito(
+        fontSize: 24 + (scaleIndex * 3),
+        color: txtColor,
+      ),
+      bodyMedium: GoogleFonts.carlito(
+        fontSize: 18 + (scaleIndex * 3),
+        color: txtColor,
+      ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       shape: CircleBorder(),
@@ -29,7 +42,7 @@ ThemeData lightTheme(int scaleIndex) {
       style: ElevatedButton.styleFrom(
         disabledBackgroundColor: bgColor,
         disabledForegroundColor: fgColor,
-      )
+      ),
     ),
     cardTheme: CardThemeData(color: Colors.grey.shade100, elevation: 1),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

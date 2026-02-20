@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../logics/major_logic.dart';
 import '../logics/student_logic.dart';
 import '../logics/textsize_logic.dart';
 import '../logics/theme_logic.dart';
@@ -14,6 +15,7 @@ Widget appProvider() {
       ChangeNotifierProvider(create: (context) => TextsizeLogic()),
       ChangeNotifierProvider(create: (context) => UserLogic()),
       ChangeNotifierProvider(create: (context) => StudentLogic()),
+      ChangeNotifierProvider(create: (context) => MajorLogic()),
     ],
     child: SplashScreen(),
   );

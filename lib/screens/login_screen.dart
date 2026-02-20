@@ -129,12 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
           if (_formKey.currentState!.validate()) {
             _service
                 .login(_emailCtrl.text.trim(), _passCtrl.text)
-                .then((successUser) async {
+                .then((successUser) async{
                   await context.read<UserLogic>().saveUser(successUser);
                   await context.read<StudentLogic>().readStudents(context);
-                  Navigator.of(
-                    context,
-                  ).push(MaterialPageRoute(builder: (context) => MainScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainScreen()));
                 })
                 .onError((e, s) {
                   debugPrint(e.toString());

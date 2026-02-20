@@ -4,9 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:my_students/services/base_url.dart';
-
-
+import '../services/base_url.dart';
 
 StudentModel studentModelFromJson(String str) => StudentModel.fromJson(json.decode(str));
 
@@ -99,7 +97,7 @@ class Datum {
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"].toString(),
         name: json["name"].toString(),
-        image: '${BaseUrl.base}/storage/${json["image"]}',
+        image: "${BaseURL.base}/storage/${json["image"]}",
         majorId: json["major_id"].toString(),
         createdAt: json["created_at"].toString(),
         updatedAt: json["updated_at"].toString(),
@@ -150,7 +148,6 @@ class Link {
     String label;
     String page;
     String active;
-
 
     Link({
         required this.url,

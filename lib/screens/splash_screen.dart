@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../apps/myapp.dart';
+import '../logics/major_logic.dart';
 import '../logics/student_logic.dart';
 import '../logics/textsize_logic.dart';
 import '../logics/theme_logic.dart';
@@ -39,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (user.token != 'token') {
       await context.read<StudentLogic>().readStudents(context);
+      await context.read<MajorLogic>().readMajors(context);
     }
   }
 
